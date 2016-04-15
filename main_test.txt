@@ -1,0 +1,42 @@
+  //----------------------------------------------------------
+   // TEST CODE --> Add this to the main method to test seat sorting in Seat_Section
+   //----------------------------------------------------------
+   cout << "==============================" << endl;
+   cout << "Test Seat Sort in Seat_Section" << endl;
+   cout << "==============================" << endl << endl;
+   cout << "Original Section:  " << endl;
+   
+   // Create section with randomly-generated seats
+   Seat_Section* hold_on_a_sec_tion = new Seat_Section("8");
+
+   // Add some seats
+   hold_on_a_sec_tion->Add_Seat(new Seat("Rowboat", 1, hold_on_a_sec_tion->Get_Name()));
+   hold_on_a_sec_tion->Add_Seat(new Seat("Rowboat", 18, hold_on_a_sec_tion->Get_Name()));
+   hold_on_a_sec_tion->Add_Seat(new Seat("Wreckreation", 1, hold_on_a_sec_tion->Get_Name()));
+   hold_on_a_sec_tion->Add_Seat(new Seat("Death_Row", 14, hold_on_a_sec_tion->Get_Name()));
+   hold_on_a_sec_tion->Add_Seat(new Seat("Rowboat", 2, hold_on_a_sec_tion->Get_Name()));
+
+   hold_on_a_sec_tion->Add_Seat(new Seat("Wreckreation", 18, hold_on_a_sec_tion->Get_Name()));
+   hold_on_a_sec_tion->Add_Seat(new Seat("Rowboat", 5, hold_on_a_sec_tion->Get_Name()));
+   hold_on_a_sec_tion->Add_Seat(new Seat("Wreckreation", 14, hold_on_a_sec_tion->Get_Name()));
+   hold_on_a_sec_tion->Add_Seat(new Seat("Death_Row", 1, hold_on_a_sec_tion->Get_Name()));
+   hold_on_a_sec_tion->Add_Seat(new Seat("Wreckreation", 2, hold_on_a_sec_tion->Get_Name()));
+
+   hold_on_a_sec_tion->Add_Seat(new Seat("Wreckreation", 5, hold_on_a_sec_tion->Get_Name()));
+   hold_on_a_sec_tion->Add_Seat(new Seat("Death_Row", 5, hold_on_a_sec_tion->Get_Name()));
+   hold_on_a_sec_tion->Add_Seat(new Seat("Death_Row", 18, hold_on_a_sec_tion->Get_Name()));
+   hold_on_a_sec_tion->Add_Seat(new Seat("Rowboat", 14, hold_on_a_sec_tion->Get_Name()));
+   hold_on_a_sec_tion->Add_Seat(new Seat("Death_Row", 2, hold_on_a_sec_tion->Get_Name()));
+
+   // Print unaltered section
+   hold_on_a_sec_tion->Display_Seats();
+
+   // Call sort in seat section.  Note:  All of the seats in seat section should have the same section name.
+   // Therefore, sorting by section is unnecessary.
+   hold_on_a_sec_tion->Sort_Seats();
+
+   cout << endl << endl << "Sorted Section:  " << endl;
+
+   // Print sorted section
+   hold_on_a_sec_tion->Display_Seats();
+   //----------------------------------------------------------
