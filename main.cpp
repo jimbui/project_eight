@@ -16,7 +16,7 @@ using namespace std ;
 int main()
 {
    std::cout << "testing the XML stuff." << " \n\n" ;
-   string filename = "Venue.xml" ; // test file.
+   string filename = "Venues.xml" ; // test file.
 
    // loading file and creating first node venue_node.
 
@@ -38,15 +38,27 @@ int main()
 
     TiXmlNode* venue_node = venue_file_node->FirstChild();
     assert(venue_node != 0);
-    //cout << venue_node->Value() << endl;
 
+	// Initialize an array of venues
+	New_Venue* venue[1000];
+	int num_venues = 0;
 
-   New_Venue* venue = Venue_From_Xml::Get_Venue(venue_node);
-   venue->Display();
+	// Iterates through all venue pointers
+	while (venue_node != 0)
+	{
+		venue[num_venues++] = Venue_From_Xml::Get_Venue(venue_node);
+		venue_node = venue_node->NextSibling();
+	}
+	
+	// Debugging only
+	for (int i = 0; i < num_venues; i++)
+	{
+		venue[i]->Display();
+		cout << endl;
+	}
 
+	std::cout << " \n" << "end program." << " \n\n" ;
 
-   std::cout << " \n" << "end program." << " \n\n" ;
-
-   cin.get();
-   cin.get();
+	cin.get();
+	cin.get();
 }
