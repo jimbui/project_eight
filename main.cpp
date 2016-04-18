@@ -8,6 +8,8 @@
 #include "Seat_Section.h"
 #include "tinyxml.h"
 #include "Venue_From_Xml.h"
+#include "menu.h"
+#include "Command_Processor.h"
 
 using namespace std ;
 
@@ -15,7 +17,7 @@ using namespace std ;
 
 int main()
 {
-   std::cout << "testing the XML stuff." << " \n\n" ;
+   std::cout << "This is Project Booth 1." << " \n\n" ;
    string filename = "Venues.xml" ; // test file.
 
    // loading file and creating first node venue_node.
@@ -30,7 +32,7 @@ int main()
       cin.get() ; exit(1) ;
    }
 
-   std::cout << "file " << filename << " read in." << " \n\n" ;
+   //std::cout << "file " << filename << " read in." << " \n\n" ;
    
     TiXmlNode* venue_file_node = doc.FirstChild("venue_file");
     assert(venue_file_node != 0);
@@ -50,15 +52,16 @@ int main()
 		venue_node = venue_node->NextSibling();
 	}
 	
-	// Debugging only
-	for (int i = 0; i < num_venues; i++)
-	{
-		venue[i]->Display();
-		cout << endl;
-	}
+	//// Debugging only
+	//for (int i = 0; i < num_venues; i++)
+	//{
+	//	venue[i]->Display();
+	//	cout << endl;
+	//}
 
-	std::cout << " \n" << "end program." << " \n\n" ;
+	Command_Processor::Process_Commands(venue, &num_venues);
 
-	cin.get();
+    cout << "\nNormal Termination\n";
+    cin.get();
 	cin.get();
 }

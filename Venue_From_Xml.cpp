@@ -131,7 +131,6 @@ New_Venue* Venue_From_Xml::Get_Venue(TiXmlNode* venue_node)
 	TiXmlNode* name_node = venue_node->FirstChild();
 	assert(name_node != 0);
 //	cout << name_node->Value() << endl;
-	cout << endl;
 
 	TiXmlNode* name_text_node = name_node->FirstChild();
 	assert(name_text_node != 0);

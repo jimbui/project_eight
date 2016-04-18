@@ -2,9 +2,9 @@
 #include "Command_Processor.h"
 using namespace std;
 
-State** Command_Processor::states = 0;
-int* Command_Processor::nr_states = 0;
-State* Command_Processor::selected_state = 0;
+New_Venue** Command_Processor::venues = 0;
+int* Command_Processor::nr_venues = 0;
+New_Venue* Command_Processor::selected_venue = 0;
 
 Command_States Command_Processor::command_state = Initial;
 
@@ -14,15 +14,15 @@ void Command_Processor::Create_Menus()
 {
     // Menu for Initial command state
     Menu* menu = new Menu("Enter command number");
-    menu->Add_Command("Select State");
-    menu->Add_Command("Add State");
+    menu->Add_Command("Select Venue");
     menu->Add_Command("Quit");
     menus[0] = menu;
 
     // Menu for State Selected
     menu = new Menu("Enter command number");
-    menu->Add_Command("Add City");
-    menu->Add_Command("Change State");
+    menu->Add_Command("Display Venue");
+    menu->Add_Command("Select Show");
+	menu->Add_Command("Change Venue");
     menu->Add_Command("Quit");
     menus[1] = menu;
 }
@@ -41,13 +41,13 @@ void Command_Processor::Create_Menus()
 //    cout << "Process_Commands  exiting\n";
 //}
 
-void Command_Processor::Process_Commands(State** states_,
-                                         int* nr_states_)
+void Command_Processor::Process_Commands(New_Venue** venues_,
+                                         int* nr_venues_)
 {
     cout << "Process commands starting\n";
 
-    states = states_;
-    nr_states = nr_states_;
+    venues = venues_;
+    nr_venues = nr_venues_;
 
     Create_Menus();
 
@@ -56,7 +56,7 @@ void Command_Processor::Process_Commands(State** states_,
         if (command_state == State_Selected)
         {
             cout << "Selected state is "
-                 << selected_state->Name() << endl;
+                 << selected_venue->Name() << endl;
         }
         const string* cmd = menus[command_state]->Get_Command();
 
@@ -78,50 +78,35 @@ void Command_Processor::Process_Commands(State** states_,
 // Process command in Initial command state
 void Command_Processor::Process_Command_0(const string& cmd)
 {
-    if (cmd == "Select State")
+    if (cmd == "Select Venue")
     {
-        // Select state
-        //cout << "Select State command\n";
-        Select_State();
-        command_state = State_Selected;
-    }
-    else if (cmd == "Add State")
-    {
-        // Add state
-        //cout << "Add State command\n";
-        Add_State();
+        // Select venue
+        //cout << "Select venue command\n";
+        Select_Venue();
         command_state = State_Selected;
     }
     else
     {
         //cout << "Quit command\n";
-        Output_XML();
         command_state = Done;
     }
-}
-
-City* Command_Processor::Get_City()
-{
-    string name;
-    cout << "City name: ";
-    getline(cin, name);
-    City* city = new City(name);
-    return city;
 }
 
 // Process command in State Selected command state
 void Command_Processor::Process_Command_1(const string& cmd)
 {
-    if (cmd == "Add City")
+    if (cmd == "Display Venue")
     {
         // Add City
         //cout << "Add City command\n";
-        City* city = Get_City();
-        selected_state->Add_City(*city);
-        delete city;
-        selected_state->Display();
+        selected_venue->Display();
     }
-    else if (cmd == "Change State")
+    else if (cmd == "Select Show")
+    {
+        //cout << "Change State command\n";
+        command_state = Initial;
+    }
+	else if (cmd == "Change Venue")
     {
         //cout << "Change State command\n";
         command_state = Initial;
@@ -129,68 +114,32 @@ void Command_Processor::Process_Command_1(const string& cmd)
     else
     {
         //cout << "Quit command\n";
-        Output_XML();
         command_state = Done;
     }
 }
 
-void Command_Processor::Select_State()
+void Command_Processor::Select_Venue()
 {
-    Menu* menu = new Menu("Select State");
-    for (int i = 0; i < *nr_states; ++i)
+    Menu* menu = new Menu("Select Venue");
+    for (int i = 0; i < *nr_venues; ++i)
     {
-        menu->Add_Command(states[i]->Name());
+		menu->Add_Command(venues[i]->Name());
     }
 
-    const string* state_name = menu->Get_Command();
+    const string* venue_name = menu->Get_Command();
 
     // Find state with this name
-    for (int i = 0; i < *nr_states; ++i)
+    for (int i = 0; i < *nr_venues; ++i)
     {
-        if (states[i]->Name() == *state_name)
+        if (venues[i]->Name() == *venue_name)
         {
-            selected_state = states[i];
+            selected_venue = venues[i];
             command_state = State_Selected;
             return;
         }
     }
     // Should never reach this point.
-    cout << "Error in Command_Processor::Select_State()\n";
+    cout << "Error in Command_Processor::Select_Venue()\n";
 }
 
-void Command_Processor::Add_State()
-{
-    string state_name;
-    string capital_name;
-    cout << "State name: ";
-    getline(cin, state_name);
-    cout << "Capital city name: ";
-    getline(cin, capital_name);
-    City* capital = new City(capital_name);
-    State* state = new State(state_name, *capital);
-    delete capital;
-    states[(*nr_states)++] = state;
-    selected_state = state;
-}
-
-void Command_Processor::Output_XML()
-{
-    ofstream outfile;
-    outfile.open("states2.xml");
-    if (!outfile.is_open())
-    {
-        cout << "Failed to open file for output\n";
-        return;
-    }
-
-    outfile << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-    outfile << "<USA>\n";
-    for (int i = 0; i < *nr_states; ++i)
-    {
-        states[i]->Output_XML(outfile);
-    }
-    outfile << "</USA>\n";
-    outfile.close();
-    cout << "File states2.xml written\n";
-}
 

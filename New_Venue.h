@@ -37,7 +37,10 @@ public:
 	const Seat_Row* Get_Seat_Row(int index) const
 	{
 		return seat_rows[index];
+
 	}
+
+	string Name() const {return name;};
 };
 
 
