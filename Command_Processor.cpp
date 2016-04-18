@@ -18,7 +18,7 @@ void Command_Processor::Create_Menus()
     menu->Add_Command("Quit");
     menus[0] = menu;
 
-    // Menu for State Selected
+    // Menu for Venue Selected
     menu = new Menu("Enter command number");
     menu->Add_Command("Display Venue");
     menu->Add_Command("Select Show");
@@ -55,10 +55,11 @@ void Command_Processor::Process_Commands(New_Venue** venues_,
     {
         if (command_state == State_Selected)
         {
-            cout << "Selected state is "
+            cout << "Selected venue is "
                  << selected_venue->Name() << endl;
         }
         const string* cmd = menus[command_state]->Get_Command();
+
 
         switch (command_state)
         {
@@ -104,7 +105,8 @@ void Command_Processor::Process_Command_1(const string& cmd)
     else if (cmd == "Select Show")
     {
         //cout << "Change State command\n";
-        command_state = Initial;
+		cout << "Select_Show Called" << endl;
+        //command_state = State_Selected;
     }
 	else if (cmd == "Change Venue")
     {
@@ -126,9 +128,10 @@ void Command_Processor::Select_Venue()
 		menu->Add_Command(venues[i]->Name());
     }
 
+
     const string* venue_name = menu->Get_Command();
 
-    // Find state with this name
+    // Find venue with this name
     for (int i = 0; i < *nr_venues; ++i)
     {
         if (venues[i]->Name() == *venue_name)
