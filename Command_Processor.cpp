@@ -84,7 +84,7 @@ void Command_Processor::Process_Command_0(const string& cmd)
         // Select venue
         //cout << "Select venue command\n";
         Select_Venue();
-        command_state = State_Selected;
+        // command_state = State_Selected;
     }
     else
     {
@@ -128,19 +128,29 @@ void Command_Processor::Select_Venue()
 		menu->Add_Command(venues[i]->Name());
     }
 
+	menu->Add_Command("Cancel");
 
     const string* venue_name = menu->Get_Command();
 
     // Find venue with this name
-    for (int i = 0; i < *nr_venues; ++i)
+    for (int i = 0; i <= *nr_venues; ++i)
     {
-        if (venues[i]->Name() == *venue_name)
-        {
-            selected_venue = venues[i];
-            command_state = State_Selected;
-            return;
-        }
+		if (i < *nr_venues)
+		{
+			if (venues[i]->Name() == *venue_name)
+			{
+				selected_venue = venues[i];
+				command_state = State_Selected;
+				return;
+			}
+		}
+		else
+		{
+			command_state = Initial;
+			return;
+		}
     }
+
     // Should never reach this point.
     cout << "Error in Command_Processor::Select_Venue()\n";
 }
