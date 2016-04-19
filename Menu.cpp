@@ -37,7 +37,7 @@ const string* Menu::Get_Command(void) const
         getline(cin, cmd);
         try
         {
-            choice = stoi(cmd);
+            choice = atoi(cmd);
         }
         catch (exception ex)
         {
