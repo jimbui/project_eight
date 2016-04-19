@@ -105,7 +105,8 @@ void Command_Processor::Process_Command_1(const string& cmd)
     else if (cmd == "Select Show")
     {
         //cout << "Change State command\n";
-		cout << "Select_Show Called" << endl;
+		cout << endl;
+		cout << "Select_Show Called" << endl << endl;
         //command_state = State_Selected;
     }
 	else if (cmd == "Change Venue")
@@ -154,5 +155,3 @@ void Command_Processor::Select_Venue()
     // Should never reach this point.
     cout << "Error in Command_Processor::Select_Venue()\n";
 }
-
-
