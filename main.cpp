@@ -8,7 +8,7 @@
 #include "Seat_Section.h"
 #include "tinyxml.h"
 #include "Venue_From_Xml.h"
-#include "menu.h"
+#include "Menu.h"
 #include "Command_Processor.h"
 
 using namespace std ;

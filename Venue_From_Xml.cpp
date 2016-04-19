@@ -122,7 +122,7 @@ void Venue_From_Xml::Get_Seats(TiXmlNode* seat_row_node, New_Venue& v)
 	}
 
 	// For testing purposes only
-	int breakpoint = 0;
+	// int breakpoint = 0;
 }
 
 New_Venue* Venue_From_Xml::Get_Venue(TiXmlNode* venue_node)
